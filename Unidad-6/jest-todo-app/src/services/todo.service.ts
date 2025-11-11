@@ -5,6 +5,11 @@ import { Todo, TodoId } from '../domain/todo';
 export class TodoService {
   private todos: Todo[] = [];
 
+  constructor(initialTodos: Todo[] = []) {
+    // Si se pasa data inicial, la usamos. Si no, comienza vacío.
+    this.todos = initialTodos;
+  }
+
   list(): Todo[] {
     return [...this.todos];
   }
@@ -38,5 +43,14 @@ export class TodoService {
 
   clear(): void {
     this.todos = [];
+  }
+
+
+stats() {
+    const total = this.todos.length;
+    const completed = this.todos.filter(t => t.completed).length;
+    const pending = total - completed;
+
+    return { total, completed, pending };
   }
 }
